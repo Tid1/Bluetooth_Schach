@@ -8,13 +8,13 @@
 
     <TextView
         android:id="@+id/turn_view_test"
-        android:layout_width="270dp"
-        android:layout_height="58dp"
+        android:layout_width="163dp"
+        android:layout_height="52dp"
         android:layout_marginTop="16dp"
         android:text="@string/turn"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintHorizontal_bias="0.129"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,8 +30,8 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="362dp"
-        android:layout_height="378dp"
+        android:layout_width="398dp"
+        android:layout_height="385dp"
         android:layout_marginStart="6dp"
         android:src="@drawable/chessboard"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +46,7 @@
         android:layout_width="315dp"
         android:layout_height="42dp"
         android:layout_marginStart="112dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="118dp"
         android:layout_marginBottom="39dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,12 +54,12 @@
         app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.019" />
 
     <com.example.bluetoothschach.View.CustomView
         android:id="@+id/customView"
-        android:layout_width="362dp"
-        android:layout_height="378dp"
+        android:layout_width="389dp"
+        android:layout_height="385dp"
         android:layout_marginStart="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -26,4 +26,8 @@
     <string name="surrenderNoString">NO</string>
     <string name="surrender">SURRENDER?</string>
     <string name="play_again">PLAY AGAIN</string>
+    <string name="loadButtonRecycler">LOAD</string>
+    <string name="localFromLoad">LOCAL</string>
+    <string name="hostFromLoad">HOST</string>
+    <string name="action">CHOOSE AN ACTION</string>
 </resources>

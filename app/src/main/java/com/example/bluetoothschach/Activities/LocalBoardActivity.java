@@ -3,6 +3,7 @@ package com.example.bluetoothschach.Activities;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +16,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bluetoothschach.R;
+import com.example.bluetoothschach.Utility.Utility;
 import com.example.bluetoothschach.View.CustomView;
+import com.google.gson.Gson;
+
+import java.util.Date;
+import java.util.Random;
 
 import Model.Exceptions.GameException;
 import Model.Exceptions.StatusException;
@@ -24,10 +30,13 @@ import Model.Spiellogik.Color;
 import Model.Spiellogik.Figuren.iPiece;
 import Model.Spiellogik.Status;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 public class LocalBoardActivity extends AppCompatActivity {
     private CustomView sCanvas;
     private ImageView imageView;
     private TextView currentTurn;
+    private String gameIdentifier = "";
     private TextView errorText;
     private boolean firstTouch = true;
     private iPiece clickedPiece;
@@ -41,7 +50,7 @@ public class LocalBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board);
-        errorText = findViewById(R.id.errorTextBoard);
+        errorText = (TextView)findViewById(R.id.errorTextBoard);
         currentTurn = (TextView)findViewById(R.id.turn_view_test);
         currentTurn.setText("TURN: WHITE");
         handleCustomView();
@@ -63,15 +72,22 @@ public class LocalBoardActivity extends AppCompatActivity {
         return false;
     };
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            float x = lastTouchDownXY[X_COORDINATE];
-            float y = lastTouchDownXY[Y_COORDINATE];
-            //TODO entfernen
-            System.out.println("X: " + x + " Y: " + y);
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if (board != null && !board.getGameEnd()){
+            //TODO GSON instance creator anschauen
+            SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = preferences.edit();
+            Gson gson = new Gson();
+            String currentBoardState = gson.toJson(board);
+            if (gameIdentifier.equals("")){
+                this.gameIdentifier = createGameIdentifier();
+            }
+            editor.putString(gameIdentifier, Utility.objectToString(board));
+            editor.commit();
         }
-    };
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     View.OnTouchListener surrenderTouched = (v, event) -> {
@@ -90,19 +106,41 @@ public class LocalBoardActivity extends AppCompatActivity {
     };
 
     private void handleBoardCreation(){
-        this.board = new BoardImpl();
-        //TODO drawField
-        try {
-            board.pickColor("player1", Color.White);
-            board.pickColor("player2", Color.Black);
-            board.initializeField();
-        } catch (StatusException e){
-            Log.e("PickColorFailed", e.getMessage());
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle != null && bundle.containsKey("BoardIdentifier")){
+            SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
+            String boardIdentifier = bundle.getString("BoardIdentifier");
+            this.gameIdentifier = boardIdentifier;
+            Gson gson = new Gson();
+            String boardJson = preferences.getString(boardIdentifier, "");
+            this.board = Utility.stringToObjectS(boardJson);
+        } else {
+            this.board = new BoardImpl();
+            //TODO drawField
+            try {
+                board.pickColor("player1", Color.White);
+                board.pickColor("player2", Color.Black);
+                board.initializeField();
+            } catch (StatusException e) {
+                Log.e("PickColorFailed", e.getMessage());
+            }
         }
         sCanvas.setBoardMap(board.getMap());
         sCanvas.invalidate();
     }
 
+
+    private String createGameIdentifier(){
+        int identifierLength = 5;
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Board: ");
+        for (int i = 0; i <= identifierLength; i++){
+            sb.append(random.nextInt(10));
+        }
+        return sb.toString();
+    }
 
     private void handleImageView(){
         this.imageView = (ImageView)findViewById(R.id.imageView4);
@@ -135,6 +173,12 @@ public class LocalBoardActivity extends AppCompatActivity {
                 try {
                     board.move(clickedPiece, xCoordinate, yCoordinate);
                     if (board.getGameEnd()){
+                        SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = preferences.edit();
+                        if (!this.gameIdentifier.equals("")){
+                            editor.remove(gameIdentifier);
+                        }
+                        editor.commit();
                         if (board.getStatus() == Status.STALEMATE){
                             handleGameFinish("GAME STALEMATED");
                         } else {
@@ -150,7 +194,7 @@ public class LocalBoardActivity extends AppCompatActivity {
                     sCanvas.setBoardMap(board.getMap());
                     sCanvas.invalidate();
                 } catch (StatusException | GameException e){
-                    errorText.setText(e.getMessage());
+                    this.errorText.setText(e.getMessage());
                 }
             }
         }

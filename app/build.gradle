@@ -30,6 +30,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation files('aar\\ASAPAndroid_0.3.4.aar')
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation files('libs\\GrundlagenMobilerAnwendung.jar')
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

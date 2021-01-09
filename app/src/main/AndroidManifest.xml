@@ -38,6 +38,7 @@
         <activity android:name=".Activities.JoinGameActivity"/>
         <activity android:name=".Activities.LocalBoardActivity"/>
         <activity android:name=".Activities.BluetoothGameActivity"/>
+        <activity android:name=".Activities.LoadGameActivity"/>
         <activity android:name=".Activities.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

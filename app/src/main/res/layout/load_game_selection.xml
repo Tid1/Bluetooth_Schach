@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/hostFromLoad"
+        android:layout_width="99dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="284dp"
+        android:text="@string/hostFromLoad"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/localFromLoad"
+        app:layout_constraintTop_toBottomOf="@+id/loadSelectionText" />
+
+    <Button
+        android:id="@+id/localFromLoad"
+        android:layout_width="97dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="74dp"
+        android:layout_marginBottom="288dp"
+        android:text="@string/localFromLoad"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hostFromLoad"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loadSelectionText" />
+
+    <TextView
+        android:id="@+id/loadSelectionText"
+        android:layout_width="225dp"
+        android:layout_height="229dp"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="87dp"
+        android:gravity="center"
+        android:text="@string/action"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/hostFromLoad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
