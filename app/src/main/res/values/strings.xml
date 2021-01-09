@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Bluetooth Schach</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="button">Button</string>
+    <string name="hello_my_friends">Hello My friends</string>
+    <string name="start_bt">START BT</string>
+    <string name="stop_bt">STOP BT</string>
+    <string name="start_pairing">START PAIRING</string>
+    <string name="start_random_button">Start RANDOM BUTTON ACTIVITY</string>
+    <string name="host_game_notify1">Down below is your Game ID</string>
+    <string name="host_game_notify2">Your friends can enter by entering the ID on their device</string>
+    <string name="load_game">LOAD GAME</string>
+    <string name="join_game">JOIN GAME</string>
+    <string name="host_game">HOST GAME</string>
+    <string name="schach">SCHACH</string>
+    <string name="enter_id">Enter ID</string>
+    <string name="join_notify">Enter Game ID here</string>
+    <string name="return_to_main">Return</string>
+    <string name="color_pick">Pick a Color</string>
+    <string name="color_black">Black</string>
+    <string name="color_white">White</string>
+    <string name="start_game">LOCAL GAME</string>
+    <string name="turn">TURN:</string>
+    <string name="surrenderYesString">YES</string>
+    <string name="surrenderNoString">NO</string>
+    <string name="surrender">SURRENDER?</string>
+    <string name="play_again">PLAY AGAIN</string>
+</resources>
