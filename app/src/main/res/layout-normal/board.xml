@@ -30,8 +30,8 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="385dp"
-        android:layout_height="385dp"
+        android:layout_width="362dp"
+        android:layout_height="378dp"
         android:layout_marginStart="6dp"
         android:src="@drawable/chessboard"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,8 +58,8 @@
 
     <com.example.bluetoothschach.View.CustomView
         android:id="@+id/customView"
-        android:layout_width="385dp"
-        android:layout_height="385dp"
+        android:layout_width="362dp"
+        android:layout_height="378dp"
         android:layout_marginStart="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
