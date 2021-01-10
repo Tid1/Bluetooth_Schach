@@ -30,4 +30,5 @@
     <string name="localFromLoad">LOCAL</string>
     <string name="hostFromLoad">HOST</string>
     <string name="action">CHOOSE AN ACTION</string>
+    <string name="clear">CLEAR</string>
 </resources>

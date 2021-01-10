@@ -20,7 +20,6 @@ import com.example.bluetoothschach.Utility.Utility;
 import com.example.bluetoothschach.View.CustomView;
 import com.google.gson.Gson;
 
-import java.util.Date;
 import java.util.Random;
 
 import Model.Exceptions.GameException;
@@ -36,6 +35,8 @@ public class LocalBoardActivity extends AppCompatActivity {
     private CustomView sCanvas;
     private ImageView imageView;
     private TextView currentTurn;
+    private final String TURN_WHITE = "TURN: WHITE";
+    private final String TURN_BLACK = "TURN: BLACK";
     private String gameIdentifier = "";
     private TextView errorText;
     private boolean firstTouch = true;
@@ -51,8 +52,10 @@ public class LocalBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board);
         errorText = (TextView)findViewById(R.id.errorTextBoard);
-        currentTurn = (TextView)findViewById(R.id.turn_view_test);
-        currentTurn.setText("TURN: WHITE");
+        currentTurn = (TextView)findViewById(R.id.changeTurns);
+        Button saveGame = (Button)findViewById(R.id.returnFromBoard);
+        saveGame.setOnClickListener(v -> returnToMain());
+        currentTurn.setText(TURN_WHITE);
         handleCustomView();
         handleBoardCreation();
         handleImageView();
@@ -79,14 +82,17 @@ public class LocalBoardActivity extends AppCompatActivity {
             //TODO GSON instance creator anschauen
             SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = preferences.edit();
-            Gson gson = new Gson();
-            String currentBoardState = gson.toJson(board);
             if (gameIdentifier.equals("")){
                 this.gameIdentifier = createGameIdentifier();
             }
             editor.putString(gameIdentifier, Utility.objectToString(board));
             editor.commit();
         }
+    }
+
+    private void returnToMain(){
+        this.finish();
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -139,11 +145,12 @@ public class LocalBoardActivity extends AppCompatActivity {
         for (int i = 0; i <= identifierLength; i++){
             sb.append(random.nextInt(10));
         }
+        sb.append(" Local");
         return sb.toString();
     }
 
     private void handleImageView(){
-        this.imageView = (ImageView)findViewById(R.id.imageView4);
+        this.imageView = (ImageView)findViewById(R.id.chessboardImage);
         //imageView.setOnTouchListener(onTouchListener);
         //imageView.setOnClickListener(onClickListener);
     }
@@ -186,10 +193,10 @@ public class LocalBoardActivity extends AppCompatActivity {
                             handleGameFinish(winner + " WON");
                         }
                     }
-                    if (currentTurn.getText().toString().equals("TURN: WHITE")){
-                        currentTurn.setText("TURN: BLACK");
+                    if (currentTurn.getText().toString().equals(TURN_WHITE)){
+                        currentTurn.setText(TURN_BLACK);
                     } else {
-                        currentTurn.setText("TURN: WHITE");
+                        currentTurn.setText(TURN_WHITE);
                     }
                     sCanvas.setBoardMap(board.getMap());
                     sCanvas.invalidate();
@@ -251,7 +258,7 @@ public class LocalBoardActivity extends AppCompatActivity {
     }
 
     private void handleSurrenderView(){
-        ImageView surrenderFlag = (ImageView)findViewById(R.id.imageView2_test);
+        ImageView surrenderFlag = (ImageView)findViewById(R.id.surrenderFlag);
         surrenderFlag.setOnTouchListener(surrenderTouched);
     }
 }

@@ -47,6 +47,8 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
     private TextView currentTurn;
     private TextView errorText;
     private boolean firstTouch = true;
+    private final String TURN_WHITE = "TURN: WHITE";
+    private final String TURN_BLACK = "TURN: BLACK";
     private iPiece clickedPiece;
     private BoardImpl board;
     private BoardProtocolEngine engine;
@@ -56,8 +58,9 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board);
         errorText = findViewById(R.id.errorTextBoard);
-        currentTurn = (TextView)findViewById(R.id.turn_view_test);
-        currentTurn.setText("TURN: WHITE");
+        currentTurn = (TextView)findViewById(R.id.changeTurns);
+        currentTurn.setText(TURN_WHITE);
+        //TODO Laden des Feldes miteinbinden
         System.out.println("Bluetooth Game Activity started");
         handleIntentExtras();
         handleCustomView();
@@ -129,10 +132,10 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
                 handleGameFinish(winner + " WON");
             }
         }
-        if (currentTurn.getText().toString().equals("TURN: WHITE")){
-            currentTurn.setText("TURN: BLACK");
+        if (currentTurn.getText().toString().equals(TURN_WHITE)){
+            currentTurn.setText(TURN_BLACK);
         } else {
-            currentTurn.setText("TURN: WHITE");
+            currentTurn.setText(TURN_WHITE);
         }
         sCanvas.setBoardMap(board.getMap());
         sCanvas.invalidate();
@@ -272,7 +275,7 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
 
     @SuppressLint("ClickableViewAccessibility")
     private void handleSurrenderView(){
-        ImageView surrenderFlag = (ImageView)findViewById(R.id.imageView2_test);
+        ImageView surrenderFlag = (ImageView)findViewById(R.id.surrenderFlag);
         surrenderFlag.setOnTouchListener((v, event) -> {
             if (event.getActionMasked() == MotionEvent.ACTION_DOWN){
                 LayoutInflater inflater = getLayoutInflater();

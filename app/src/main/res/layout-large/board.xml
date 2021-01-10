@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/turn_view_test"
+        android:id="@+id/changeTurns"
         android:layout_width="359dp"
         android:layout_height="104dp"
         android:layout_marginTop="80dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2_test"
+        android:id="@+id/surrenderFlag"
         android:layout_width="183dp"
         android:layout_height="139dp"
         android:layout_marginTop="52dp"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/chessboardImage"
         android:layout_width="388dp"
         android:layout_height="419dp"
         android:layout_marginStart="6dp"
@@ -67,6 +67,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/chessboardImage" />
+
+    <Button
+        android:id="@+id/returnFromBoard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="24dp"
+        android:text="SAVE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
