@@ -47,7 +47,11 @@ public class HostGameActivity extends InitActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        BluetoothSchach.deleteMessageReceivedListener(setUpReceiver);
+        try {
+            BluetoothSchach.deleteMessageReceivedListener(setUpReceiver);
+        } catch (NullPointerException e){
+            Log.e("ListenerNotFound", e.getMessage());
+        }
     }
 
     private void createDynamicIdentifier(){

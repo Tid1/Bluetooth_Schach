@@ -34,7 +34,11 @@ public class JoinGameActivity extends InitActivity{
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        BluetoothSchach.deleteMessageReceivedListener(joinSetupReceiver);
+        try {
+            BluetoothSchach.deleteMessageReceivedListener(joinSetupReceiver);
+        } catch (NullPointerException e){
+            Log.e("ListenerNotFound", e.getMessage());
+        }
     }
 
     private void joinOnClick() throws ASAPException {

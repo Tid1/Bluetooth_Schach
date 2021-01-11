@@ -77,7 +77,11 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        BluetoothSchach.deleteMessageReceivedListener(receiver);
+        try {
+            BluetoothSchach.deleteMessageReceivedListener(receiver);
+        } catch (NullPointerException e){
+            Log.e("ListenerNotFound", e.getMessage());
+        }
     }
 
     @Override
