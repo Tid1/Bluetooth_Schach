@@ -66,14 +66,4 @@
         app:layout_constraintTop_toBottomOf="@+id/hostGameTextTwo"
         app:layout_constraintVertical_bias="1.0" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="138dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="93dp"
-        android:layout_marginTop="105dp"
-        android:text="Button"
-        app:layout_constraintStart_toEndOf="@+id/returnFromHost"
-        app:layout_constraintTop_toBottomOf="@+id/hostGameTextTwo" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

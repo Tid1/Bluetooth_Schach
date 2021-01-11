@@ -118,9 +118,14 @@ public class LocalBoardActivity extends AppCompatActivity {
             SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
             String boardIdentifier = bundle.getString("BoardIdentifier");
             this.gameIdentifier = boardIdentifier;
-            Gson gson = new Gson();
             String boardJson = preferences.getString(boardIdentifier, "");
             this.board = Utility.stringToObjectS(boardJson);
+
+            if (board.getStatus() == Status.TURN_WHITE){
+                this.currentTurn.setText(TURN_WHITE);
+            } else if (board.getStatus() == Status.TURN_BLACK){
+                this.currentTurn.setText(TURN_BLACK);
+            }
         } else {
             this.board = new BoardImpl();
             //TODO drawField
@@ -155,7 +160,7 @@ public class LocalBoardActivity extends AppCompatActivity {
         //imageView.setOnClickListener(onClickListener);
     }
 
-    private void handleTouch(float x, float y) {
+    public void handleTouch(float x, float y) {
         float fieldSize = sCanvas.getWidth() / 8f;
 
         int xCoordinate = (int) (x / fieldSize) + 1;
@@ -179,27 +184,7 @@ public class LocalBoardActivity extends AppCompatActivity {
             if(clickedPiece != null){
                 try {
                     board.move(clickedPiece, xCoordinate, yCoordinate);
-                    if (board.getGameEnd()){
-                        SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
-                        SharedPreferences.Editor editor = preferences.edit();
-                        if (!this.gameIdentifier.equals("")){
-                            editor.remove(gameIdentifier);
-                        }
-                        editor.commit();
-                        if (board.getStatus() == Status.STALEMATE){
-                            handleGameFinish("GAME STALEMATED");
-                        } else {
-                            String winner = currentTurn.getText().toString().split(" ")[1];
-                            handleGameFinish(winner + " WON");
-                        }
-                    }
-                    if (currentTurn.getText().toString().equals(TURN_WHITE)){
-                        currentTurn.setText(TURN_BLACK);
-                    } else {
-                        currentTurn.setText(TURN_WHITE);
-                    }
-                    sCanvas.setBoardMap(board.getMap());
-                    sCanvas.invalidate();
+                    handleTurns();
                 } catch (StatusException | GameException e){
                     this.errorText.setText(e.getMessage());
                 }
@@ -236,17 +221,53 @@ public class LocalBoardActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private void deleteGame(){
+        SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        if (!this.gameIdentifier.equals("")){
+            editor.remove(gameIdentifier);
+        }
+        editor.commit();
+    }
+    private void handleTurns(){
+        if (board.getGameEnd()){
+            deleteGame();
+            if (board.getStatus() == Status.STALEMATE){
+                handleGameFinish("GAME STALEMATED");
+            } else {
+                String winner = currentTurn.getText().toString().split(" ")[1];
+                handleGameFinish(winner + " WON");
+            }
+        }
+        if (currentTurn.getText().toString().equals(TURN_WHITE)){
+            currentTurn.setText(TURN_BLACK);
+        } else {
+            currentTurn.setText(TURN_WHITE);
+        }
+        sCanvas.setBoardMap(board.getMap());
+        sCanvas.invalidate();
+    }
+
 
     private void handleCustomView(){
         sCanvas = (CustomView)findViewById(R.id.customView);
         sCanvas.setOnTouchListener(onTouchListener);
     }
 
+    private void surrenderMessage(){
+        if (currentTurn.getText().toString() == TURN_BLACK){
+            handleGameFinish("WHITE WON");
+        } else {
+            handleGameFinish("BLACK WON");
+        }
+    }
+
     private void handleSurrender(View view, Dialog dialog){
         Button surrenderYesButton = view.findViewById(R.id.surrenderYes);
         surrenderYesButton.setOnClickListener((v1 -> {
-            startActivity(new Intent(LocalBoardActivity.this, MainActivity.class));
-            LocalBoardActivity.this.finish();
+            board.surrender();
+            surrenderMessage();
+            deleteGame();
             dialog.cancel();
         }));
 

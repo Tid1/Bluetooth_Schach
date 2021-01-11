@@ -9,10 +9,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.List;
 
+import Model.Daten.iStorage;
 import Model.Spiellogik.BoardImpl;
+import Model.Spiellogik.iBoard;
 
-public class Utility {
+public class Utility{
     public static BoardImpl stringToObjectS(String string) {
         byte[] bytes = Base64.decode(string, 0);
         BoardImpl object = null;
@@ -38,4 +41,5 @@ public class Utility {
         }
         return encoded;
     }
+
 }

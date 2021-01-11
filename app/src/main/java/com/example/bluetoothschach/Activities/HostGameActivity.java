@@ -37,8 +37,6 @@ public class HostGameActivity extends InitActivity {
         setContentView(R.layout.host_game);
         createDynamicIdentifier();
         Button returnButton = (Button)findViewById(R.id.returnFromHost);
-        Button button = (Button)findViewById(R.id.button);
-        button.setOnClickListener(v -> sendMessage());
         returnButton.setOnClickListener(v -> returnToMain());
         TextView dynamicIDView = (TextView)findViewById(R.id.dynamicGameID);
         dynamicIDView.setText(dynamicIdentifier);
@@ -63,7 +61,7 @@ public class HostGameActivity extends InitActivity {
         dynamicUri = DEFAULT_URI + dynamicIdentifier;
     }
 
-    private void sendMessage(){
+   /* private void sendMessage(){
         byte message = 10;
         byte[] messageArray = {message};
         Log.d("DummyMessage","Dummy message about to be send");
@@ -73,7 +71,7 @@ public class HostGameActivity extends InitActivity {
 
         }
         Log.d("DummyMessage", "Dummy message sent");
-    }
+    }*/
     public String getDynamicIdentifier(){
         return dynamicUri;
     }

@@ -43,7 +43,7 @@ public class GUITests {
                     "android.permission.WRITE_EXTERNAL_STORAGE");
 
     @Test
-    public void gUITests() {
+    public void guiTests() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.hostButton), withText("HOST GAME"),
                         childAtPosition(

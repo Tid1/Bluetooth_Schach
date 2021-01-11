@@ -3,6 +3,7 @@ package com.example.bluetoothschach.Activities;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.example.bluetoothschach.BluetoothSchach;
 import com.example.bluetoothschach.Network.GameMessageReceiver;
 import com.example.bluetoothschach.R;
+import com.example.bluetoothschach.Utility.Utility;
 import com.example.bluetoothschach.View.CustomView;
 
 import net.sharksystem.asap.ASAPException;
@@ -36,6 +38,8 @@ import Netzwerk.BoardProtocolEngine;
 import Netzwerk.iReceiver;
 import Netzwerk.iSender;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 public class BluetoothGameActivity extends InitActivity implements iReceiver, iSender{
     private CustomView sCanvas;
     private ImageView imageView;
@@ -52,6 +56,7 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
     private iPiece clickedPiece;
     private BoardImpl board;
     private BoardProtocolEngine engine;
+    private String gameIdentifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -75,6 +80,19 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
         BluetoothSchach.deleteMessageReceivedListener(receiver);
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if (board != null && !board.getGameEnd()){
+            SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = preferences.edit();
+            if (gameIdentifier.equals("")){
+                this.gameIdentifier = this.uri;
+            }
+            editor.putString(gameIdentifier, Utility.objectToString(board));
+            editor.commit();
+        }
+    }
     private void handleBoardCreation(){
         this.board = new BoardImpl();
         this.baos = new ByteArrayOutputStream();
@@ -123,8 +141,18 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
         }
     }
 
+    private void deleteGame(){
+        SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        if (!this.gameIdentifier.equals("")){
+            editor.remove(gameIdentifier);
+        }
+        editor.commit();
+    }
+
     private void handleTurns(){
         if (board.getGameEnd()){
+            deleteGame();
             if (board.getStatus() == Status.STALEMATE){
                 handleGameFinish("GAME STALEMATED");
             } else {
@@ -156,6 +184,7 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
         textView.setText(typeOfFinish);
 
         returnToMain.setOnClickListener(v -> {
+            deleteGame();
             this.finish();
             this.startActivity(new Intent(this, MainActivity.class));
             dialog.cancel();
