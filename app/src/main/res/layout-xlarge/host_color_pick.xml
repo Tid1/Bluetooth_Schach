@@ -8,23 +8,22 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="344dp"
+        android:layout_height="177dp"
         android:layout_marginTop="88dp"
         android:layout_marginBottom="120dp"
         android:gravity="center"
         android:text="@string/color_pick"
-        android:textSize="24sp"
+        android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/colorWhiteButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/colorWhiteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="154dp"
+        android:layout_height="84dp"
         android:layout_marginStart="27dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
@@ -38,8 +37,8 @@
 
     <Button
         android:id="@+id/colorBlackButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="177dp"
+        android:layout_height="92dp"
         android:layout_marginStart="29dp"
         android:layout_marginTop="138dp"
         android:layout_marginEnd="13dp"

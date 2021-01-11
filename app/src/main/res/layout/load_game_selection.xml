@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/hostFromLoad"
-        android:layout_width="99dp"
-        android:layout_height="56dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
         android:layout_marginTop="72dp"
         android:layout_marginEnd="52dp"
@@ -22,8 +22,8 @@
 
     <Button
         android:id="@+id/localFromLoad"
-        android:layout_width="97dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginTop="74dp"
         android:layout_marginBottom="288dp"
@@ -35,8 +35,8 @@
 
     <TextView
         android:id="@+id/loadSelectionText"
-        android:layout_width="225dp"
-        android:layout_height="229dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
         android:layout_marginTop="34dp"
         android:layout_marginEnd="87dp"
@@ -45,7 +45,7 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/hostFromLoad"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

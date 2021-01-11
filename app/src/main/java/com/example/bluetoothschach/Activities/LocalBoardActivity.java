@@ -17,8 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bluetoothschach.R;
 import com.example.bluetoothschach.Utility.Utility;
-import com.example.bluetoothschach.View.CustomView;
-import com.google.gson.Gson;
+import com.example.bluetoothschach.View.MovementView;
+import com.example.bluetoothschach.View.PieceView;
 
 import java.util.Random;
 
@@ -32,7 +32,8 @@ import Model.Spiellogik.Status;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class LocalBoardActivity extends AppCompatActivity {
-    private CustomView sCanvas;
+    private PieceView sCanvas;
+    private MovementView mCanvas;
     private ImageView imageView;
     private TextView currentTurn;
     private final String TURN_WHITE = "TURN: WHITE";
@@ -65,12 +66,11 @@ public class LocalBoardActivity extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")
     View.OnTouchListener onTouchListener = (v, event) -> {
         if(event.getActionMasked() == MotionEvent.ACTION_DOWN){
-            if (errorText != null){
+            if (errorText != null) {
                 errorText.setText("");
             }
             handleTouch(event.getX(), event.getY());
             //TODO entfernen
-            System.out.println(event.getX());
         }
         return false;
     };
@@ -175,18 +175,38 @@ public class LocalBoardActivity extends AppCompatActivity {
 
         if (firstTouch){
             clickedPiece = board.onField(xCoordinate, yCoordinate);
+            if (clickedPiece != null &&((currentTurn.getText().toString().equals(TURN_WHITE) && clickedPiece.getColor() != Color.White )
+                    ||(currentTurn.getText().toString().equals(TURN_BLACK) && clickedPiece.getColor() != Color.Black))){
+                errorText.setText("Can't click enemy pieces!");
+                return;
+            }
             firstTouch = false;
             if (clickedPiece == null){
                 firstTouch = true;
+            } else {
+                mCanvas.setCurrentPieceMoveset(clickedPiece.getMoveset().moveSet(board));
+                mCanvas.invalidate();
             }
         } else {
             firstTouch = true;
-            if(clickedPiece != null){
-                try {
-                    board.move(clickedPiece, xCoordinate, yCoordinate);
-                    handleTurns();
-                } catch (StatusException | GameException e){
-                    this.errorText.setText(e.getMessage());
+            if(clickedPiece != null) {
+                iPiece pieceOnField =  board.onField(xCoordinate, yCoordinate);
+                if (pieceOnField != null && clickedPiece.getColor() == pieceOnField.getColor()) {
+                    clickedPiece = pieceOnField;
+                    if ((currentTurn.getText().toString().equals(TURN_WHITE) && clickedPiece.getColor() == Color.White )
+                            ||(currentTurn.getText().toString().equals(TURN_BLACK) && clickedPiece.getColor() == Color.Black)){
+                        mCanvas.setCurrentPieceMoveset(clickedPiece.getMoveset().moveSet(board));
+                    }
+                    mCanvas.invalidate();
+                    firstTouch = false;
+                } else {
+                    try {
+                        board.move(clickedPiece, xCoordinate, yCoordinate);
+                        handleTurns();
+                    } catch (StatusException | GameException e) {
+                        this.errorText.setText(e.getMessage());
+                        mCanvas.invalidate();
+                    }
                 }
             }
         }
@@ -246,11 +266,13 @@ public class LocalBoardActivity extends AppCompatActivity {
         }
         sCanvas.setBoardMap(board.getMap());
         sCanvas.invalidate();
+        mCanvas.invalidate();
     }
 
 
     private void handleCustomView(){
-        sCanvas = (CustomView)findViewById(R.id.customView);
+        sCanvas = (PieceView)findViewById(R.id.customView);
+        mCanvas = (MovementView)findViewById(R.id.movementView);
         sCanvas.setOnTouchListener(onTouchListener);
     }
 

@@ -32,7 +32,7 @@ import Model.Spiellogik.BoardImpl;
 import Model.Spiellogik.Figuren.iPiece;
 import Model.Spiellogik.iPlayer;
 
-public class CustomView extends View {
+public class PieceView extends View {
     private Canvas canvas;
     private Paint paint = new Paint();
     private Paint testPaint = new Paint(Paint.UNDERLINE_TEXT_FLAG);
@@ -42,12 +42,12 @@ public class CustomView extends View {
     List<Bitmap> bitmaps = new LinkedList<>();
     private int[] lastTouchDownXY = new int[2];
 
-    public CustomView(Context context) {
+    public PieceView(Context context) {
         super(context);
         init(null);
     }
 
-    public CustomView(Context context, AttributeSet set){
+    public PieceView(Context context, AttributeSet set){
         super(context, set);
         init(set);
     }
@@ -121,56 +121,6 @@ public class CustomView extends View {
             }
         }
     }
-
-   /* @Override
-    protected void onDraw(Canvas canvas){
-        super.onDraw(canvas);
-        drawFigureOnBitmap(R.drawable.bishop_white);
-        drawFigureOnBitmap(R.drawable.knight_white);
-        drawFigureOnBitmap(R.drawable.queen_white);
-        drawFigureOnBitmap(R.drawable.pawn_white);
-        drawFigureOnBitmap(R.drawable.king_white);
-        drawFigureOnBitmap(R.drawable.rook_white);
-
-        RectF ovalShape = new RectF();
-        ovalShape.left = 300;
-        ovalShape.top = 300;
-
-        ovalShape.right = ovalShape.left + 40;
-        ovalShape.bottom = ovalShape.top + 40;
-
-
-        int i = 0;
-        for (Bitmap bitmap : bitmaps){
-            canvas.drawBitmap(bitmap, ((getWidth()/8)*0)+5, (getHeight()/8)*i+5, null);
-            canvas.drawBitmap(bitmap, ((getWidth()/8)*1)+5, ((getHeight()/8)*i)+5, null);
-            i++;
-        }
-
-        /*int offset = 0;
-        Matrix matrix = new Matrix();
-        canvas.drawBitmap(bitmap, matrix, null);
-        canvas.drawBitmap(bitmap, offset, offset, null);
-        //canvas.scale(720, 720);
-        Rect rect = new Rect();
-        int squareHeight = getHeight() /8;
-        int squareWidth = getWidth() / 8;
-        rect.left = getWidth();
-        rect.top = getHeight();
-        rect.right = rect.left - squareWidth;
-        rect.bottom = rect.left - squareHeight;
-
-
-        System.out.println(canvas.getHeight() / 8);
-        System.out.println(canvas.getWidth() / 8);
-        paint.setColor(Color.RED);
-        canvas.drawRect(rect, paint);
-        paint.setColor(Color.RED);
-        canvas.drawOval(ovalShape, paint);
-        //canvas.drawBitmap(bitmap, ((getWidth()/8)*0)+5, 0+5, null);
-        //canvas.drawRect(rect, paint);
-    }*/
-
 
     public void invalidateCanvas(){
         invalidate();

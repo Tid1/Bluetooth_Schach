@@ -17,7 +17,8 @@ import com.example.bluetoothschach.BluetoothSchach;
 import com.example.bluetoothschach.Network.GameMessageReceiver;
 import com.example.bluetoothschach.R;
 import com.example.bluetoothschach.Utility.Utility;
-import com.example.bluetoothschach.View.CustomView;
+import com.example.bluetoothschach.View.MovementView;
+import com.example.bluetoothschach.View.PieceView;
 
 import net.sharksystem.asap.ASAPException;
 
@@ -41,7 +42,8 @@ import Netzwerk.iSender;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class BluetoothGameActivity extends InitActivity implements iReceiver, iSender{
-    private CustomView sCanvas;
+    private PieceView sCanvas;
+    private MovementView mCanvas;
     private ImageView imageView;
     private Color playerColor;
     private String uri;
@@ -56,13 +58,15 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
     private iPiece clickedPiece;
     private BoardImpl board;
     private BoardProtocolEngine engine;
-    private String gameIdentifier;
+    private String gameIdentifier = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board);
         errorText = findViewById(R.id.errorTextBoard);
+        Button saveGame = findViewById(R.id.returnFromBoard);
+        saveGame.setOnClickListener(v -> returnToMain());
         currentTurn = (TextView)findViewById(R.id.changeTurns);
         currentTurn.setText(TURN_WHITE);
         //TODO Laden des Feldes miteinbinden
@@ -91,7 +95,13 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
             SharedPreferences preferences = getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = preferences.edit();
             if (gameIdentifier.equals("")){
-                this.gameIdentifier = this.uri;
+                String colorToString = "";
+                if (playerColor == Color.Black){
+                    colorToString = "Black";
+                } else {
+                    colorToString = "White";
+                }
+                this.gameIdentifier = "Board: " + this.uri + " Online " + "Color: " + colorToString;
             }
             editor.putString(gameIdentifier, Utility.objectToString(board));
             editor.commit();
@@ -103,6 +113,11 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
         this.bais = new ByteArrayInputStream(baos.toByteArray());
         this.engine = new BoardProtocolEngine(board, baos, bais);
         //TODO
+    }
+
+    private void returnToMain(){
+        this.finish();
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     private void handleTouch(float x, float y) {
@@ -129,17 +144,33 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
             firstTouch = false;
             if (clickedPiece == null){
                 firstTouch = true;
+            } else if ((currentTurn.getText().toString().equals(TURN_WHITE) && clickedPiece.getColor() == playerColor && clickedPiece.getColor() == Color.White)
+                    || (currentTurn.getText().toString().equals(TURN_BLACK) && clickedPiece.getColor() == playerColor && clickedPiece.getColor() == Color.Black)){
+                mCanvas.setCurrentPieceMoveset(clickedPiece.getMoveset().moveSet(board));
+                mCanvas.invalidate();
             }
         } else {
             firstTouch = true;
-            if(clickedPiece != null){
-                try {
-                    engine.move(clickedPiece, xCoordinate, yCoordinate);
-                    System.out.println("engine move aufgerufen");
-                    sendTurn(engine.getBaos());
-                    handleTurns();
-                } catch (StatusException | GameException e){
-                    errorText.setText(e.getMessage());
+            if(clickedPiece != null) {
+                iPiece pieceOnField = board.onField(xCoordinate, yCoordinate);
+                if (pieceOnField != null && clickedPiece.getColor() == pieceOnField.getColor()) {
+                    clickedPiece = pieceOnField;
+                    if ((currentTurn.getText().toString().equals(TURN_WHITE) && clickedPiece.getColor() == playerColor && clickedPiece.getColor() == Color.White)
+                       || (currentTurn.getText().toString().equals(TURN_BLACK) && clickedPiece.getColor() == playerColor && clickedPiece.getColor() == Color.Black)) {
+                        mCanvas.setCurrentPieceMoveset(clickedPiece.getMoveset().moveSet(board));
+                    }
+                    mCanvas.invalidate();
+                    firstTouch = false;
+                } else {
+                    try {
+                        engine.move(clickedPiece, xCoordinate, yCoordinate);
+                        System.out.println("engine move aufgerufen");
+                        sendTurn(engine.getBaos());
+                        handleTurns();
+                    } catch (StatusException | GameException e) {
+                        errorText.setText(e.getMessage());
+                        mCanvas.invalidate();
+                    }
                 }
             }
         }
@@ -171,6 +202,7 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
         }
         sCanvas.setBoardMap(board.getMap());
         sCanvas.invalidate();
+        mCanvas.invalidate();
     }
 
     private void handleGameFinish(String typeOfFinish){
@@ -231,7 +263,8 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
 
     @SuppressLint("ClickableViewAccessibility")
     private void handleCustomView(){
-        sCanvas = (CustomView)findViewById(R.id.customView);
+        sCanvas = (PieceView)findViewById(R.id.customView);
+        mCanvas = (MovementView)findViewById(R.id.movementView);
         sCanvas.setOnTouchListener((v, event) -> {
             if(event.getActionMasked() == MotionEvent.ACTION_DOWN){
                 if (errorText != null){
