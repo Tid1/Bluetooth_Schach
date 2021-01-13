@@ -10,7 +10,7 @@
         android:id="@+id/endGameText"
         android:layout_width="317dp"
         android:layout_height="317dp"
-        android:layout_marginStart="54dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="46dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="10dp"
@@ -27,28 +27,18 @@
         android:layout_width="135dp"
         android:layout_height="68dp"
         android:layout_marginStart="54dp"
-        android:layout_marginEnd="222dp"
-        android:layout_marginBottom="152dp"
+        android:layout_marginBottom="200dp"
         android:text="@string/play_again"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/endGameText" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/returnFromEnd"
         android:layout_width="135dp"
         android:layout_height="68dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginBottom="197dp"
+        android:layout_marginBottom="200dp"
         android:text="@string/return_to_main"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/replayFromEnd"
-        app:layout_constraintTop_toBottomOf="@+id/endGameText"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

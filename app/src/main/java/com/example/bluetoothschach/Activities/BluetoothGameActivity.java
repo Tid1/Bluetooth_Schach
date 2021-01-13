@@ -101,6 +101,7 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
                 } else {
                     colorToString = "White";
                 }
+                //TODO identifier kürzen
                 this.gameIdentifier = "Board: " + this.uri + " Online " + "Color: " + colorToString;
             }
             editor.putString(gameIdentifier, Utility.objectToString(board));
