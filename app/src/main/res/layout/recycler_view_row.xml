@@ -3,6 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/recyclerLoadButton"
+            android:layout_width="77dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="4dp"
+            android:text="@string/loadButtonRecycler" />
+
         <TextView
             android:id="@+id/recyclerTextView"
             android:layout_width="wrap_content"
@@ -10,14 +19,5 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="10dp"
             android:textSize="24sp" />
-
-        <Button
-            android:id="@+id/recyclerLoadButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="4dp"
-            android:text="@string/loadButtonRecycler" />
 
 </LinearLayout>

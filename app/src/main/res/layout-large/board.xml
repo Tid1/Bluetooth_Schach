@@ -44,7 +44,7 @@
     </com.example.bluetoothschach.View.PieceView>
 
     <com.example.bluetoothschach.View.MovementView
-        android:id="@+id/move"
+        android:id="@+id/movementView"
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:layout_marginStart="6dp"

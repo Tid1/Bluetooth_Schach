@@ -18,8 +18,8 @@
 
     <ImageView
         android:id="@+id/chessboardImage"
-        android:layout_width="380dp"
-        android:layout_height="380dp"
+        android:layout_width="330dp"
+        android:layout_height="330dp"
         android:layout_marginStart="6dp"
         android:src="@drawable/chessboard"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,15 +39,15 @@
         android:layout_marginBottom="39dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.477"
+        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chessboardImage"
-        app:layout_constraintVertical_bias="0.019" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.example.bluetoothschach.View.PieceView
         android:id="@+id/customView"
-        android:layout_width="380dp"
-        android:layout_height="380dp"
+        android:layout_width="330dp"
+        android:layout_height="330dp"
         android:layout_marginStart="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,8 +59,8 @@
 
     <com.example.bluetoothschach.View.MovementView
         android:id="@+id/movementView"
-        android:layout_width="380dp"
-        android:layout_height="380dp"
+        android:layout_width="330dp"
+        android:layout_height="330dp"
         android:layout_marginStart="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,18 +82,17 @@
 
     <TextView
         android:id="@+id/changeTurns"
-        android:layout_width="250dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="243dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="27dp"
         android:layout_marginEnd="26dp"
-        android:layout_marginBottom="78dp"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/chessboardImage"
         app:layout_constraintEnd_toStartOf="@+id/surrenderFlag"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintVertical_bias="0.363" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

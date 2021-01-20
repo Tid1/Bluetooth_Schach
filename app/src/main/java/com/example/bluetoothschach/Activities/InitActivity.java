@@ -11,8 +11,8 @@ public class InitActivity extends ASAPActivity {
         super(BluetoothSchach.getInstance());
     }
 
-    /*@Override
+    @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-    }*/
+    }
 }
