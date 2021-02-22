@@ -135,6 +135,11 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
             yCoordinate = 8;
         }
 
+        if (playerColor != null && playerColor == Color.Black){
+            xCoordinate = 9-xCoordinate;
+            yCoordinate = 9-yCoordinate;
+        }
+
         if (firstTouch){
             clickedPiece = board.onField(xCoordinate, yCoordinate);
             if (clickedPiece != null && clickedPiece.getColor() != playerColor){
@@ -265,7 +270,9 @@ public class BluetoothGameActivity extends InitActivity implements iReceiver, iS
     @SuppressLint("ClickableViewAccessibility")
     private void handleCustomView(){
         sCanvas = (PieceView)findViewById(R.id.customView);
+        sCanvas.setPlayerColor(playerColor);
         mCanvas = (MovementView)findViewById(R.id.movementView);
+        mCanvas.setPlayerColor(playerColor);
         sCanvas.setOnTouchListener((v, event) -> {
             if(event.getActionMasked() == MotionEvent.ACTION_DOWN){
                 if (errorText != null){

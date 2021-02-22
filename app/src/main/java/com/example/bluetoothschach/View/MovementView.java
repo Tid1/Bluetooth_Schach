@@ -14,6 +14,7 @@ import java.util.List;
 import Model.Spiellogik.Figuren.Position;
 
 public class MovementView extends View {
+    private Model.Spiellogik.Color playerColor;
     private List<Position> currentPieceMoveset;
     private Paint paint = new Paint();
 
@@ -32,6 +33,10 @@ public class MovementView extends View {
 
     }
 
+    public void setPlayerColor(Model.Spiellogik.Color playerColor){
+        this.playerColor = playerColor;
+    }
+
 
     private void drawDot(int x, int y, Canvas canvas){
         int sizeWidth =  ((getWidth() / 8)*x)-(getWidth() / 16);
@@ -43,8 +48,14 @@ public class MovementView extends View {
     @Override
     protected void onDraw(Canvas canvas){
         if (currentPieceMoveset != null && currentPieceMoveset.size() != 0){
-            for (Position position : currentPieceMoveset){
-                drawDot(position.getX(), position.getY(), canvas);
+            if (playerColor != null && playerColor == Model.Spiellogik.Color.Black){
+                for (Position position : currentPieceMoveset){
+                    drawDot(9-position.getX(), 9 - position.getY(), canvas);
+                }
+            } else {
+                for (Position position : currentPieceMoveset){
+                    drawDot(position.getX(), position.getY(), canvas);
+                }
             }
             currentPieceMoveset.clear();
         }

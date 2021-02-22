@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Picture;
@@ -29,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import Model.Spiellogik.BoardImpl;
+import Model.Spiellogik.Color;
 import Model.Spiellogik.Figuren.iPiece;
 import Model.Spiellogik.iPlayer;
 
@@ -37,6 +37,7 @@ public class PieceView extends View {
     private Paint paint = new Paint();
     private Paint testPaint = new Paint(Paint.UNDERLINE_TEXT_FLAG);
     private Bitmap bitmap;
+    private Color playerColor;
     private Map<iPlayer, List<iPiece>> boardMap;
     private final float width = getWidth();
     List<Bitmap> bitmaps = new LinkedList<>();
@@ -61,6 +62,11 @@ public class PieceView extends View {
         Bitmap mutableBitmap = BitmapFactory.decodeResource(getResources(), ressource);
         bitmap = Bitmap.createScaledBitmap(mutableBitmap, (getWidth()/ 8)-10, (getHeight()/ 8)-10, false);
     }
+
+    public void setPlayerColor(Color color){
+        this.playerColor = color;
+    }
+
 
     @Override
     protected void onDraw(Canvas canvas){
@@ -115,11 +121,25 @@ public class PieceView extends View {
                             }
                             break;
                     }
-                    canvas.drawBitmap(bitmap, ((getWidth()/8)*(currentPiece.getPosition().getX() - 1)+5),
-                            (getHeight()/8)*(9-(currentPiece.getPosition().getY()+1))+5, null);
+                    if (playerColor != null && playerColor == Color.Black){
+                        canvas.drawBitmap(bitmap, ((getWidth()/8)*(9-(currentPiece.getPosition().getX()+1))+5),
+                                (getHeight()/8)*((currentPiece.getPosition().getY()-1))+5, null);
+                    } else {
+                        canvas.drawBitmap(bitmap, ((getWidth()/8)*(currentPiece.getPosition().getX() - 1)+5),
+                                (getHeight()/8)*(9-(currentPiece.getPosition().getY()+1))+5, null);
+                    }
+
                 }
             }
         }
+    }
+
+    private void drawBoardForWhite(iPiece currentPiece){
+
+    }
+
+    private void drawBoardForBlack(iPiece currentPiece){
+
     }
 
     public void invalidateCanvas(){

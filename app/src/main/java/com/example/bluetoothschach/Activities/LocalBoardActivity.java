@@ -272,7 +272,9 @@ public class LocalBoardActivity extends AppCompatActivity {
 
     private void handleCustomView(){
         sCanvas = (PieceView)findViewById(R.id.customView);
+        sCanvas.setPlayerColor(Color.White);
         mCanvas = (MovementView)findViewById(R.id.movementView);
+        mCanvas.setPlayerColor(Color.White);
         sCanvas.setOnTouchListener(onTouchListener);
     }
 
